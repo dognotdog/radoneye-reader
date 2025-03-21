@@ -28,6 +28,8 @@ class RadonEyeParser:
 
     def parse_sensor_data(self, data: bytearray) -> dict:
         serial = self.read_str(data, 8, 3) + self.read_str(data, 2, 6) + self.read_str(data, 11, 4)
+        # seen serial contain a 0x07 (Bell) character, which might confuse MQTT, so strip it.
+        serial = ''.join(i for i in serial if i.isprintable())
         model = self.read_str(data, 16, 6)
         version = self.read_str(data, 22, 6)
         latest_bq_m3 = self.read_short(data, 33)
