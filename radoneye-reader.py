@@ -234,7 +234,7 @@ class RadonEyeReaderApp:
 
     def mqtt_init(self):
         if self.args.mqtt:
-            self.mqttc = mqtt.Client("radoneye_{hostname}".format(hostname=socket.gethostname()))
+            self.mqttc = mqtt.Client("radoneye_{hostname}".format(hostname=socket.gethostname()), callback_api_version=mqtt.CallbackAPIVersion.VERSION1)
 
             if self.args.debug:
                 self.mqttc.enable_logger()
